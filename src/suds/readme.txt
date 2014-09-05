@@ -53,5 +53,9 @@ The procedure for recreating this port is described below (adapted from https://
         __repr__ method ->
             Remove ".encode('utf-8')" from return statement
 
+    ./sax/date.py
+        change "return '{0}{1:+02d}:00'.format(time, self.tz.local)" to "return '{0}{1:+03d}:00'.format(time, self.tz.local)"
+        change "LOCAL = ( 0-time.timezone/60/60 )" to "LOCAL = ( 0-time.timezone//60//60 )"
+
 2. Run the 2to3 tool.
     python C:\Python33\Tools\Scripts\2to3.py -n -w C:\Python33\Lib\site-packages\suds

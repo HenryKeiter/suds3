@@ -252,7 +252,7 @@ class Time:
     def __str__(self):
         time = self.time.isoformat()
         if self.tz.local:
-            return '{0}{1:+02d}:00'.format(time, self.tz.local)
+            return '{0}{1:+03d}:00'.format(time, self.tz.local)
         else:
             return '{}Z'.format(time)
 
@@ -334,7 +334,7 @@ class Timezone:
     
     pattern = re.compile('([zZ])|([\-\+][0-9]{2}:[0-9]{2})')
     
-    LOCAL = ( 0-time.timezone/60/60 )
+    LOCAL = ( 0-time.timezone//60//60 )
 
     def __init__(self, offset=None):
         if offset is None:
