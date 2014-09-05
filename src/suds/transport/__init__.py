@@ -85,7 +85,7 @@ class Reply:
         s.append('CODE: {0}'.format(self.code))
         s.append('HEADERS: {0}'.format(self.headers))
         s.append('MESSAGE:')
-        s.append(self.message)
+        s.append(str(self.message))
         return '\n'.join(s)
 
 

@@ -681,14 +681,11 @@ class Element:
         @return: True when element has not children.
         @rtype: boolean
         """
-        noattrs = not len(self.attributes)
-        nochildren = not len(self.children)
-        notext = ( self.text is None )
-        nocontent = ( nochildren and notext )
+        nocontent = not (self.children or self.text)
         if content:
             return nocontent
         else:
-            return ( nocontent and noattrs )
+            return ( nocontent and not self.attributes )
             
             
     def isnil(self):

@@ -134,6 +134,9 @@ class Time:
         self.tz = Timezone()
         if isinstance(time, dt.time):
             self.time = time
+            self.offset = time.utcoffset()
+            if adjusted:
+                self.__adjust()
             return
         if isinstance(time, str):
             self.time = self.__parse(time)
@@ -244,13 +247,15 @@ class Time:
         if len(s) == len('-00:00'):
             return int(s[:3])
         if len(s) == 0:
-            return self.tz.local
+            return self.tz.local or 0
         if len(s) == 1:
             return 0
         raise Exception()
 
     def __str__(self):
         time = self.time.isoformat()
+        if self.tz.local is None:
+            return time
         if self.tz.local:
             return '{0}{1:+03d}:00'.format(time, self.tz.local)
         else:
@@ -337,8 +342,6 @@ class Timezone:
     LOCAL = ( 0-time.timezone//60//60 )
 
     def __init__(self, offset=None):
-        if offset is None:
-            offset = self.LOCAL
         self.local = offset
     
     @classmethod
@@ -362,5 +365,8 @@ class Timezone:
         @return: The delta between I{offset} and local TZ.
         @rtype: B{datetime}.I{timedelta}
         """
-        delta = ( self.local - offset )
+        if offset is None or self.local is None:
+            delta = 0
+        else:
+            delta = ( self.local - offset )
         return dt.timedelta(hours=delta)

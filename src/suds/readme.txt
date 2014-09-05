@@ -1,13 +1,13 @@
 This package is a very rough port of suds 0.4 to Python 3.
 
-The procedure for recreating this port is described below (adapted from https://fedorahosted.org/suds/ticket/393).
+The procedure for recreating the basic port is described below (adapted from https://fedorahosted.org/suds/ticket/393). However, other changes have been applied to this module, which are not recorded in this file. See the Subversion history.
 
 1. Manually apply the following changes:
     Find all "__unicode__" methods
         - eliminate them all and adapt __str__  to compensate (a few places require slight modification, but mostly the body of __unicode__ just replaces the body of __str__).
 
     ./transport/__init__.py
-        Change "s.append(self.message)" to s.append(str(self.message))
+        Change (2x) "s.append(self.message)" to s.append(str(self.message))
 
     ./transport/http.py
         remove    "from urlparse import urlparse" 

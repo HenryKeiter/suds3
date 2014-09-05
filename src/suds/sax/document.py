@@ -45,13 +45,17 @@ class Document(Element):
         s = []
         s.append(self.DECL)
         s.append('\n')
-        s.append(self.root().str())
+        r = self.root()
+        if r is not None:
+            s.append(r.str())
         return ''.join(s)
     
     def plain(self):
         s = []
         s.append(self.DECL)
-        s.append(self.root().plain())
+        r = self.root()
+        if r is not None:
+            s.append(r.plain())
         return ''.join(s)
 
     def __str__(self):
